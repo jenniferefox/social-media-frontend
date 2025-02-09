@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Input, Tooltip } from 'antd';
+import axios from 'axios';
+
+const LOCAL_BASE_URL = "http://localhost:5000"
 
 interface FormInput {
     email: string,
     password: string
-
   }
 
 const Login: React.FC = () => {
@@ -16,6 +18,13 @@ const Login: React.FC = () => {
   });
   const [toggleSignUp, setToggleSignUp] = useState<Boolean>(true);
 
+  // useEffect(() => {
+  //   axios.get(`${LOCAL_BASE_URL}/login`)
+  //   .then(response => {
+  //    console.log(response.data)
+  //     })
+  //   },[]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setLoginDetails((prevDetails) => ({
@@ -25,12 +34,31 @@ const Login: React.FC = () => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
+
     e.preventDefault()
+
     const email = loginDetails.email;
     const password = loginDetails.password;
+
+    const dataToSend = {
+      email: `${email}`,
+      password: `${password}`
+    };
+
     console.log('Email:', email);
-    console.log('Hashed Password:', password);
+    console.log('Password:', password);
     console.log(e)
+    if (toggleSignUp) {
+      axios.post(`${LOCAL_BASE_URL}/login`, dataToSend)
+      .then(response => {
+        console.log(response.data)
+        });
+    } else {
+      axios.get(`${LOCAL_BASE_URL}/users`)
+      .then(response => {
+        console.log(response.data)
+      });
+    };
   };
 
   return (
@@ -64,8 +92,8 @@ const Login: React.FC = () => {
       <Button htmlType="submit">{toggleSignUp? "Create Account" : "Sign In" }</Button>
     </form>
     <br />
-    <Button type="link" onPress ={() => setToggleSignUp(!toggleSignUp)}>
-      Already have an account? Sign in here
+    <Button type="link" onClick ={() => setToggleSignUp(!toggleSignUp)}>
+      Already have an account? Sign in instead.
     </Button>
   </div>
   )
