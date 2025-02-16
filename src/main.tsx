@@ -19,12 +19,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />
-  }
+    element: <Login />,
+  },
 ]);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-      <RouterProvider router={router} />
+    <RouterProvider router={router} />
   </StrictMode>
 );

@@ -15,7 +15,10 @@ interface FormInput {
   favourite_snack: string;
 }
 
-const Login: React.FC = () => {
+const Login: React.FC<{ handleLoginToggle: () => void }> = ({
+  handleLoginToggle,
+}) => {
+  // FIXME: Move user details to state at parent component, so that details can be sent to MyProfile component
   const [loginDetails, setLoginDetails] = useState<FormInput>({
     email: "",
     password: "",
@@ -25,7 +28,6 @@ const Login: React.FC = () => {
     favourite_snack: "",
   });
   const [hasAccount, setHasAccount] = useState<Boolean>(false);
-  // const [isSignedIn, setIsSignedIn] = useState<Boolean>(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -38,7 +40,7 @@ const Login: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("Reached here!")
+    console.log("Reached here!");
 
     const email = loginDetails.email;
     const password = loginDetails.password;
@@ -70,16 +72,18 @@ const Login: React.FC = () => {
         .post(`${API_BASE_URL}/signup`, signupDataToSend)
         .then((response) => {
           console.log(response.data);
+          handleLoginToggle();
         });
     } else {
-      axios.post(`${API_BASE_URL}/login`, loginDataToSend)
-      .then((response) => {
+      axios.post(`${API_BASE_URL}/login`, loginDataToSend).then((response) => {
         console.log(response.data);
+        handleLoginToggle();
       });
     }
   };
 
   return (
+    // FIX ME: put inputs into .map to make code more concise
     <>
       <Navbar />
       <div className="login-container">
