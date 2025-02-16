@@ -40,3 +40,36 @@
 .read-the-docs {
   color: #888;
 }
+
+.App {
+  min-height: 4em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  margin-bottom: 0.4em
+}
+
+.navbar-root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: #eff2f4;
+}
+
+body {
+  margin-top: 10px;
+}
+
+.navbar-root .ant-menu-item {
+  color: rgb(15, 13, 13);
+}
+
+.navbar-root .ant-menu-item:hover {
+  background-color: #1890ff;
+  color: white;
+}
