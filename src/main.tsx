@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import MyProfile from "./components/MyProfile.tsx";
+import Profile from "./components/Profile.tsx";
 import Login from "./components/Login.tsx";
 
 // const queryClient = new QueryClient();
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/myprofile",
-    element: <MyProfile />,
+    element: <Profile />,
   },
   {
     path: "/login",

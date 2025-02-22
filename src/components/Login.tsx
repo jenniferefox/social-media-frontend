@@ -10,9 +10,9 @@ interface FormInput {
   email: string;
   password: string;
   name: string;
-  favourite_colour: string;
-  favourite_animal: string;
-  favourite_snack: string;
+  favouriteColour: string;
+  favouriteAnimal: string;
+  favouriteSnack: string;
 }
 
 const Login: React.FC<{ handleLoginToggle: () => void }> = ({
@@ -23,10 +23,12 @@ const Login: React.FC<{ handleLoginToggle: () => void }> = ({
     email: "",
     password: "",
     name: "",
-    favourite_colour: "",
-    favourite_animal: "",
-    favourite_snack: "",
+    favouriteColour: "",
+    favouriteAnimal: "",
+    favouriteSnack: "",
   });
+// does this need to be handled in a state
+
   const [hasAccount, setHasAccount] = useState<Boolean>(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,9 +47,9 @@ const Login: React.FC<{ handleLoginToggle: () => void }> = ({
     const email = loginDetails.email;
     const password = loginDetails.password;
     const name = loginDetails.name;
-    const favourite_colour = loginDetails.favourite_colour;
-    const favourite_animal = loginDetails.favourite_animal;
-    const favourite_snack = loginDetails.favourite_snack;
+    const favouriteColour = loginDetails.favouriteColour;
+    const favouriteAnimal = loginDetails.favouriteAnimal;
+    const favouriteSnack = loginDetails.favouriteSnack;
 
     const loginDataToSend = {
       email: `${email}`,
@@ -58,9 +60,9 @@ const Login: React.FC<{ handleLoginToggle: () => void }> = ({
       email: `${email}`,
       password: `${password}`,
       name: `${name}`,
-      favourite_colour: `${favourite_colour}`,
-      favourite_animal: `${favourite_animal}`,
-      favourite_snack: `${favourite_snack}`,
+      favouriteColour: `${favouriteColour}`,
+      favouriteAnimal: `${favouriteAnimal}`,
+      favouriteSnack: `${favouriteSnack}`,
     };
 
     console.log("Email:", email);
@@ -73,6 +75,12 @@ const Login: React.FC<{ handleLoginToggle: () => void }> = ({
         .then((response) => {
           console.log(response.data);
           handleLoginToggle();
+        }).catch((error) => {
+          if (error.response && error.response.status === 409) {
+            alert("User already exists, please sign in instead.");
+          } else {
+            alert("An error occurred. Please try again")
+          }
         });
     } else {
       axios.post(`${API_BASE_URL}/login`, loginDataToSend).then((response) => {
@@ -90,6 +98,7 @@ const Login: React.FC<{ handleLoginToggle: () => void }> = ({
         <h2>{!hasAccount ? "Sign Up" : "Sign In"}</h2>
         <form onSubmit={handleSubmit}>
           <Input
+          className="Input"
             name="email"
             autoComplete="on"
             value={loginDetails.email}
@@ -102,9 +111,8 @@ const Login: React.FC<{ handleLoginToggle: () => void }> = ({
               </Tooltip>
             }
           />
-          <br />
-          <br />
           <Input
+            className="Input"
             name="password"
             type="password"
             autoComplete="on"
@@ -113,13 +121,12 @@ const Login: React.FC<{ handleLoginToggle: () => void }> = ({
             placeholder="Enter your password"
             prefix={<UserOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
           />
-          <br />
-          <br />
 
           {!hasAccount ? (
             <>
               <p> We'd like to know a little more about you!</p>
               <Input
+                className="Input"
                 name="name"
                 value={loginDetails.name}
                 defaultValue="pink"
@@ -127,40 +134,36 @@ const Login: React.FC<{ handleLoginToggle: () => void }> = ({
                 placeholder="What's your name?"
                 prefix={<UserOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
               />
-              <br />
-              <br />
               <Input
-                name="favourite_colour"
-                value={loginDetails.favourite_colour}
+                className="Input"
+                name="favouriteColour"
+                value={loginDetails.favouriteColour}
                 onChange={handleInputChange}
                 placeholder="Enter your fave colour"
                 prefix={<UserOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
               />
-              <br />
-              <br />
               <Input
-                name="favourite_animal"
-                value={loginDetails.favourite_animal}
+                className="Input"
+                name="favouriteAnimal"
+                value={loginDetails.favouriteAnimal}
                 onChange={handleInputChange}
                 placeholder="Enter your fave animal"
                 prefix={<UserOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
               />
-              <br />
-              <br />
+
               <Input
-                name="favourite_snack"
-                value={loginDetails.favourite_snack}
+                className="Input"
+                name="favouriteSnack"
+                value={loginDetails.favouriteSnack}
                 onChange={handleInputChange}
                 placeholder="Enter your fave snack"
                 prefix={<UserOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
               />
-              <br />
-              <br />
             </>
           ) : (
             <br />
           )}
-          <Button htmlType="submit">
+          <Button className="Button" htmlType="submit">
             {!hasAccount ? "Create Account" : "Go to My Account"}
           </Button>
         </form>

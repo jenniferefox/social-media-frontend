@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
-import MyProfile from "./components/MyProfile";
+import MyProfile from "./components/Profile";
 
 // TODO: handlelogintoggle - toggles once user has logged in successfully. needs to be created in parent component
 
