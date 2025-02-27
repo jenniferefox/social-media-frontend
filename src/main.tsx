@@ -4,9 +4,10 @@ import "./index.css";
 import App from "./App.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Profile from "./components/Profile.tsx";
-import Login from "./components/Login.tsx";
+import Login from "./components/Login/Login.tsx";
+import { QueryClient, QueryClientProvider } from "react-query";
 
-// const queryClient = new QueryClient();
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -15,16 +16,20 @@ const router = createBrowserRouter([
   },
   {
     path: "/myprofile",
-    element: <Profile />,
+    element: <Profile userId={""} />,
   },
   {
     path: "/login",
-    element: <Login />,
+    element: <Login onChange={function (): void {
+      throw new Error("Function not implemented.");
+    } } userId={""} />,
   },
 ]);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </StrictMode>
 );

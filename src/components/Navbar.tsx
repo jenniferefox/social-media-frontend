@@ -6,13 +6,11 @@ import { Menu } from "antd";
 type MenuItem = Required<MenuProps>["items"][number];
 
 const items: MenuItem[] = [
-  // FIX ME: This link should only work if logged in is true - inherit through props!
   {
     key: "myprofile",
     icon: <SmileOutlined />,
     label: <a href={"/MyProfile"}>My Profile</a>,
   },
-  // FIX ME: Get Logout button working properly.
   {
     key: "alipay",
     label: (

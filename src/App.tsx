@@ -1,26 +1,24 @@
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import "./App.css";
-import Login from "./components/Login";
+import Login from "./components/Login/Login";
 import Navbar from "./components/Navbar";
-import MyProfile from "./components/Profile";
-
-// TODO: handlelogintoggle - toggles once user has logged in successfully. needs to be created in parent component
+import Profile from "./components/Profile";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState<Boolean>(false);
+  const [userId, setUserId] = useState<string>("");
 
-  const handleLoginToggle = () => {
-    setLoggedIn(!loggedIn);
+  const handleUserId = (newUserId: SetStateAction<string>) => {
+    setUserId(newUserId);
   };
 
   return (
     <>
       <Navbar />
       <div className="login-container">
-        {loggedIn ? (
-          <MyProfile handleLoginToggle={handleLoginToggle} />
+        {userId ? (
+          <Profile userId={userId}/>
         ) : (
-          <Login handleLoginToggle={handleLoginToggle} />
+          <Login onChange={handleUserId} userId={userId}/>
         )}
       </div>
     </>
